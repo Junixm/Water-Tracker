@@ -17,13 +17,13 @@ struct ContentView: View {
                     Text("Home")
                 }
             
-            Text("Stats")
+            Text("Coming Soon")
                 .tabItem {
                     Image(systemName: "chart.bar.fill")
                     Text("Stats")
                 }
             
-            Text("Settings")
+            SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape.fill")
                     Text("Settings")
@@ -38,7 +38,8 @@ struct ContentView: View {
         configurations: ModelConfiguration(isStoredInMemoryOnly: true)
     )
     
-    container.mainContext.insert(UserSettings())
+    let settings = UserSettings()
+    container.mainContext.insert(settings)
     
-    return HomeView().modelContainer(container)
+    return ContentView().modelContainer(container)
 }
