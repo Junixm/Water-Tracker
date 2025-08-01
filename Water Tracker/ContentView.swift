@@ -33,5 +33,12 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let container = try! ModelContainer(
+        for: UserSettings.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+    
+    container.mainContext.insert(UserSettings())
+    
+    return HomeView().modelContainer(container)
 }

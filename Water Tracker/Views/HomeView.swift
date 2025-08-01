@@ -6,8 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
+    
+    @Query var userSettings: [UserSettings]
+    
+    var dailyGoal: Int {
+        userSettings.first?.intakeGoal ?? 404
+    }
+    
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -39,7 +48,7 @@ struct HomeView: View {
                         Text("ml")
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        Text("of 2000 ml")
+                        Text("of \(dailyGoal) ml")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
@@ -108,5 +117,12 @@ struct BeverageButton: View {
 }
 
 #Preview {
-    HomeView()
+    let container = try! ModelContainer(
+        for: UserSettings.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+    
+    container.mainContext.insert(UserSettings())
+    
+    return HomeView().modelContainer(container)
 }

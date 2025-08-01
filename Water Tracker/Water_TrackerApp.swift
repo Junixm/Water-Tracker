@@ -13,5 +13,6 @@ struct Water_TrackerApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [UserSettings.self])
     }
 }
