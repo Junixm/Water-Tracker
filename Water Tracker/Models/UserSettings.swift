@@ -11,17 +11,20 @@ import SwiftData
 @Model
 class UserSettings {
     var intakeGoal: Int
+    var isreminderEnabled: Bool
     var reminderStartTime: Date
     var reminderEndTime: Date
     var quickVolumes: [Int]
     
     init(
         intakeGoal: Int = 2000,
+        isreminderEnabled: Bool = false,
         reminderStartTime: Date = UserSettings.defaultTime(hour: 8, minute: 0),
         reminderEndTime: Date = UserSettings.defaultTime(hour: 22, minute: 0),
         quickVolumes: [Int] = [250, 500, 750, 1000]
     ) {
         self.intakeGoal = intakeGoal
+        self.isreminderEnabled = isreminderEnabled
         self.reminderStartTime = reminderStartTime
         self.reminderEndTime = reminderEndTime
         self.quickVolumes = quickVolumes

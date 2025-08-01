@@ -13,8 +13,9 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var context
     
     @State private var intakeGoal: Int = 404
-    @State private var reminderStart: Date = UserSettings.defaultTime(hour: 0, minute: 0)
-    @State private var reminderEnd: Date = UserSettings.defaultTime(hour: 23,minute: 59)
+    @State private var isReminderEnabled: Bool = false
+    @State private var reminderStart: Date = UserSettings.defaultTime(hour: 8, minute: 0)
+    @State private var reminderEnd: Date = UserSettings.defaultTime(hour: 22,minute: 0)
     @State private var quickVolume1: Int = 1
     @State private var quickVolume2: Int = 2
     @State private var quickVolume3: Int = 3
@@ -27,14 +28,14 @@ struct SettingsView: View {
                     SliderView(targetName: "Goal", target: $intakeGoal, minValue: 100, maxValue: 10000, step: 10)
                 }
                 
-                /*
                 Section(header: Text("Reminder Time")) {
+                    Toggle("Enable Reminders", isOn: $isReminderEnabled)
                     DatePicker("Start", selection: $reminderStart, displayedComponents: .hourAndMinute)
+                        .disabled(!isReminderEnabled)
                     DatePicker("End", selection: $reminderEnd, displayedComponents: .hourAndMinute)
+                        .disabled(!isReminderEnabled)
                 }
-                */
                 
-                /*
                 Section(header: Text("Quick Volumes")) {
                     let min: Int = 10
                     let max: Int = 1000
@@ -44,7 +45,6 @@ struct SettingsView: View {
                     SliderView(targetName: "Volume 3", target: $quickVolume3, minValue: min, maxValue: max, step: step)
                     SliderView(targetName: "Volume 4", target: $quickVolume4, minValue: min, maxValue: max, step: step)
                 }
-                */
                 
                 Button("Save Settings") {
                     saveSettings()
@@ -66,6 +66,7 @@ struct SettingsView: View {
         let defaultSettings = UserSettings()
         
         intakeGoal = defaultSettings.intakeGoal
+        isReminderEnabled = defaultSettings.isreminderEnabled
         reminderStart = defaultSettings.reminderStartTime
         reminderEnd = defaultSettings.reminderEndTime
         quickVolume1 = defaultSettings.quickVolumes[0]
@@ -77,6 +78,7 @@ struct SettingsView: View {
     private func loadSettings() {
         guard let userSettings = settings.first else { return }
         intakeGoal = userSettings.intakeGoal
+        isReminderEnabled = userSettings.isreminderEnabled
         reminderStart = userSettings.reminderStartTime
         reminderEnd = userSettings.reminderEndTime
         
@@ -97,6 +99,7 @@ struct SettingsView: View {
         }
         
         userSettings?.intakeGoal = intakeGoal
+        userSettings?.isreminderEnabled = isReminderEnabled
         userSettings?.reminderStartTime = reminderStart
         userSettings?.reminderEndTime = reminderEnd
         userSettings?.quickVolumes = [quickVolume1, quickVolume2, quickVolume3, quickVolume4]
