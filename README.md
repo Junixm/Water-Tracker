@@ -1,7 +1,9 @@
 # Water Tracker iOS app
-### This is a personal water tracking app project i am currently working on for my own personal needs.
+### This is a simple personal water tracking app project i am currently working on for my own personal needs.
 ### Currently, it is a static, non functioning app.
 ### It is going to be developed slowly when i have the time.
+
+![alt text](Homepage.png)
 
 ## Features
 - Homepage with today's water intake.
